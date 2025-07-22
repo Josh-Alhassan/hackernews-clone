@@ -4,7 +4,7 @@ import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import Link from "./Link";
 
-const FEED_QUERY = gql`
+export const FEED_QUERY = gql`
   query FeedQuery {
     feed {
       id
@@ -13,6 +13,16 @@ const FEED_QUERY = gql`
         createdAt
         url
         description
+        postedBy {
+          id
+          name
+        }
+        votes {
+          id
+          user {
+            id
+          }
+        }
       }
     }
   }
@@ -23,6 +33,16 @@ type LinkType = {
   description: string;
   url: string;
   createdAt?: string;
+  postedBy?: {
+    id: string;
+    name: string;
+  };
+  votes?: {
+    id: string;
+    user: {
+      id: string;
+    };
+  }[];
 };
 
 type FeedQueryData = {
@@ -32,16 +52,16 @@ type FeedQueryData = {
   };
 };
 
-const LinkList = () => {
+const LinkList: React.FC = () => {
   const { data, loading, error } = useQuery<FeedQueryData>(FEED_QUERY);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading links.</p>;
 
   return (
-    <div className="space-y-4">
-      {data?.feed.links.map((link) => (
-        <Link key={link.id} link={link} />
+    <div className="pa4">
+      {data?.feed.links.map((link, index) => (
+        <Link key={link.id} link={{ ...link }} index={index} />
       ))}
     </div>
   );

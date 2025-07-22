@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, FormEvent, ChangeEvent } from "react";
+import { FEED_QUERY } from "./LinkList";
 import { useRouter } from "next/navigation";
 import { useMutation, gql } from "@apollo/client";
 
@@ -29,6 +30,20 @@ const CreateLink: React.FC = () => {
     variables: {
       description: formState.description,
       url: formState.url,
+    },
+    update: (cache, { data: { post } }) => {
+      const data = cache.readQuery({
+        query: FEED_QUERY,
+      });
+
+      cache.writeQuery({
+        query: FEED_QUERY,
+        data: {
+          feed: {
+            links: [post, ...data.feed.links],
+          },
+        },
+      });
     },
     onCompleted: () => {
       router.push("/");
