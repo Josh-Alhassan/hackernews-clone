@@ -1,4 +1,3 @@
-import CreateLink from "@/components/CreateLink";
 import LinkList from "@/components/LinkList";
 
 import "@/styles/globals.css";
