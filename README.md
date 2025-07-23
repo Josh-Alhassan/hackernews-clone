@@ -1,8 +1,3 @@
-Here’s a **comprehensive `README.md`** template for your project, assuming it's a Hacker News clone built with **Next.js**, **TypeScript**, **Apollo Client**, **GraphQL**, and **Tachyons**.
-
----
-
-```markdown
 # Hacker News Clone 🚀
 
 A simplified clone of Hacker News built with [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/), [Apollo Client](https://www.apollographql.com/docs/react/), and [GraphQL](https://graphql.org/). Styled using [Tachyons](https://tachyons.io/) and TailwindCSS utilities.
@@ -20,6 +15,7 @@ A simplified clone of Hacker News built with [Next.js](https://nextjs.org/), [Ty
 ---
 
 ## 📁 Project Structure
+
 ```
 
 .
@@ -38,7 +34,7 @@ A simplified clone of Hacker News built with [Next.js](https://nextjs.org/), [Ty
 ├── public/
 └── tsconfig.json
 
-````
+```
 
 ---
 
@@ -58,9 +54,9 @@ A simplified clone of Hacker News built with [Next.js](https://nextjs.org/), [Ty
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/hackernews-clone.git
+git clone https://github.com/josh-Alhassan/hackernews-clone.git
 cd hackernews-clone
-````
+```
 
 ### 2. Install dependencies
 
@@ -103,19 +99,17 @@ yarn test
 
 ## 📸 Screenshots
 
-| Search                                     | Result                                     |
-| ------------------------------------------ | ------------------------------------------ |
-| ![Search](./public/screenshots/search.png) | ![Result](./public/screenshots/result.png) |
+![hackernews clone](./public/hackernewsclone.png)
 
 ---
 
 ## 📌 Roadmap
 
 - [x] Basic Search functionality
-- [ ] Authentication with JWT
-- [ ] Link voting system
+- [x] Authentication with JWT
+- [x] Link voting system
 - [ ] Add pagination
-- [ ] Backend mutation for link submission
+- [x] Backend mutation for link submission
 
 ---
 
@@ -138,7 +132,7 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 ## 👨‍💻 Author
 
 **Joshua Abel Alhassan**
-📫 [@JoshuaAbel\_](https://twitter.com/JoshuaAbel_) | 🌐 [Portfolio](https://your-portfolio.com)
+📫 [@Josh_script](https://twitter.com/@josh_script) | 🌐 [Portfolio](https://alhassanjoshua.surge.sh)
 Built with ❤️ and a lot of debugging.
 
 ---
@@ -149,7 +143,4 @@ If you liked this project, consider giving it a ⭐️ on GitHub and sharing it 
 
 ```
 
----
-
-Let me know if you'd like it tailored for deployment on platforms like **Vercel**, or if you want badges (build status, license, etc.) added!
 ```
