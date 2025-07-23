@@ -1,7 +1,5 @@
 import LinkList from "@/components/LinkList";
 
-import "@/styles/globals.css";
-
 export default function Home() {
   return (
     <div>
