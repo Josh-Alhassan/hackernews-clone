@@ -52,30 +52,25 @@ type LinkProps = {
   index: number;
 };
 
-export default function Link({ link, index }: LinkProps) {
+const Link: React.FC<LinkProps> = ({ link, index }) => {
   const authToken =
     typeof window !== "undefined" ? localStorage.getItem(AUTH_TOKEN) : null;
 
   const [vote] = useMutation(VOTE_MUTATION, {
-    variables: {
-      linkId: link.id,
-    },
+    variables: { linkId: link.id },
     update: (cache, { data }) => {
-      const vote = data?.vote;
-      if (!vote) return;
+      const newVote = data?.vote;
+      if (!newVote) return;
 
-      const existingData: any = cache.readQuery({
+      const existingData = cache.readQuery<{ feed: { links: LinkType[] } }>({
         query: FEED_QUERY,
       });
 
       if (!existingData) return;
 
-      const updatedLinks = existingData.feed.links.map((feedLink: LinkType) =>
+      const updatedLinks = existingData.feed.links.map((feedLink) =>
         feedLink.id === link.id
-          ? {
-              ...feedLink,
-              votes: [...feedLink.votes, vote],
-            }
+          ? { ...feedLink, votes: [...feedLink.votes, newVote] }
           : feedLink
       );
 
@@ -92,27 +87,38 @@ export default function Link({ link, index }: LinkProps) {
   });
 
   return (
-    <div className="flex mt-2 items-start">
-      <div className="flex items-center">
-        <span className="text-gray-500">{index + 1}.</span>
+    <div className="flex items-start space-x-2 mt-3">
+      <div className="flex items-center space-x-1 text-gray-500 text-sm">
+        <span>{index + 1}.</span>
         {authToken && (
-          <div
-            className="ml-1 text-gray-500 text-xs cursor-pointer"
+          <button
             onClick={() => vote()}
+            className="hover:text-gray-800 focus:outline-none"
+            title="Vote"
           >
             ▲
-          </div>
+          </button>
         )}
       </div>
-      <div className="ml-1">
-        <div>
-          {link.description} ({link.url})
+      <div className="flex flex-col">
+        <div className="text-sm text-gray-900">
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            {link.description}
+          </a>{" "}
+          <span className="text-gray-500 text-xs">({link.url})</span>
         </div>
-        <div className="text-sm leading-tight text-gray-500">
+        <div className="text-xs text-gray-500">
           {link.votes.length} votes | by {link.postedBy?.name || "Unknown"}{" "}
           {timeDifferenceForDate(link.createdAt)}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Link;

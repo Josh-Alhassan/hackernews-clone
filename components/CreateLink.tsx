@@ -1,9 +1,30 @@
 "use client";
 
 import React, { useState, FormEvent, ChangeEvent } from "react";
-import { FEED_QUERY } from "./LinkList";
 import { useRouter } from "next/navigation";
 import { useMutation, gql } from "@apollo/client";
+import { FEED_QUERY } from "./LinkList";
+
+interface PostMutationVariables {
+  description: string;
+  url: string;
+}
+
+interface PostMutationData {
+  post: {
+    id: string;
+    createdAt: string;
+    url: string;
+    description: string;
+  };
+}
+
+interface FeedQueryData {
+  feed: {
+    id?: string;
+    links: PostMutationData["post"][];
+  };
+}
 
 const CREATE_LINK_MUTATION = gql`
   mutation PostMutation($description: String!, $url: String!) {
@@ -18,41 +39,45 @@ const CREATE_LINK_MUTATION = gql`
 
 const CreateLink: React.FC = () => {
   const router = useRouter();
-  const [formState, setFormState] = useState<{
-    description: string;
-    url: string;
-  }>({
+  const [formState, setFormState] = useState<PostMutationVariables>({
     description: "",
     url: "",
   });
 
-  const [createLink] = useMutation(CREATE_LINK_MUTATION, {
-    variables: {
-      description: formState.description,
-      url: formState.url,
-    },
-    update: (cache, { data: { post } }) => {
-      const data = cache.readQuery({
-        query: FEED_QUERY,
-      });
+  const [createLink] = useMutation<PostMutationData, PostMutationVariables>(
+    CREATE_LINK_MUTATION,
+    {
+      variables: {
+        description: formState.description,
+        url: formState.url,
+      },
+      update: (cache, { data }) => {
+        if (!data) return;
 
-      cache.writeQuery({
-        query: FEED_QUERY,
-        data: {
-          feed: {
-            links: [post, ...data.feed.links],
-          },
-        },
-      });
-    },
-    onCompleted: () => {
-      router.push("/");
-    },
-  });
+        const existingData = cache.readQuery<FeedQueryData>({
+          query: FEED_QUERY,
+        });
+
+        if (existingData?.feed) {
+          cache.writeQuery<FeedQueryData>({
+            query: FEED_QUERY,
+            data: {
+              feed: {
+                ...existingData.feed,
+                links: [data.post, ...existingData.feed.links],
+              },
+            },
+          });
+        }
+      },
+      onCompleted: () => {
+        router.push("/");
+      },
+    }
+  );
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     createLink();
     console.log("Submitted:", formState);
   };
