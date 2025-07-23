@@ -1,0 +1,56 @@
+.linkContainer {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 12px;
+  gap: 8px;
+}
+
+.voteSection {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7280; /* gray-500 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+.voteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1rem;
+}
+
+.voteButton:hover {
+  color: #374151; /* gray-800 */
+}
+
+.linkContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkDescription {
+  font-size: 0.875rem;
+  color: #111827; /* gray-900 */
+}
+
+.linkDescription a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.linkDescription a:hover {
+  text-decoration: underline;
+}
+
+.linkUrl {
+  color: #6b7280;
+  font-size: 0.75rem; /* text-xs */
+}
+
+.metaInfo {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 2px;
+}

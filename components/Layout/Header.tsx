@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AUTH_TOKEN } from "@/constants";
+import styles from "./Header.module.css";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -16,39 +17,39 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="flex pa1 justify-between nowrap orange">
-      <div className="flex flex-fixed black">
-        <Link href="/" className="no-underline black">
-          <div className="fw7 mr1">Hacker News</div>
+    <header className={styles.header}>
+      <nav className={styles.navLeft}>
+        <Link href="/" className={styles.logo}>
+          Hacker News
         </Link>
-        <Link href="/" className="ml1 no-underline black">
+        <Link href="/" className={styles.link}>
           new
         </Link>
-        <div className="ml1">|</div>
-        <Link href="/search" className="ml1 no-underline black">
+        <span className={styles.divider}>|</span>
+        <Link href="/search" className={styles.link}>
           search
         </Link>
         {authToken && (
-          <div className="flex">
-            <div className="ml1">|</div>
-            <Link href="/create" className="ml1 no-underline black">
+          <>
+            <span className={styles.divider}>|</span>
+            <Link href="/create" className={styles.link}>
               submit
             </Link>
-          </div>
+          </>
         )}
-      </div>
-      <div className="flex flex-fixed">
+      </nav>
+      <nav className={styles.navRight}>
         {authToken ? (
-          <div className="ml1 pointer black" onClick={handleLogout}>
+          <span className={styles.logout} onClick={handleLogout}>
             logout
-          </div>
+          </span>
         ) : (
-          <Link href="/login" className="ml1 no-underline black">
+          <Link href="/login" className={styles.link}>
             login
           </Link>
         )}
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 

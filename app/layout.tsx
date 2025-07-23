@@ -13,9 +13,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <div className="center w85">
+        <div>
           <Header />
-          <div className="ph3 pv1 background-gray">
+          <div>
             <ApolloWrapper>{children}</ApolloWrapper>
           </div>
         </div>

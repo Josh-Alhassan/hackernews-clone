@@ -5,6 +5,7 @@ import { gql, useMutation } from "@apollo/client";
 import { AUTH_TOKEN } from "@/constants";
 import { timeDifferenceForDate } from "@/utils";
 import { FEED_QUERY } from "./LinkList";
+import styles from "./Link.module.css";
 
 export const VOTE_MUTATION = gql`
   mutation VoteMutation($linkId: ID!) {
@@ -87,32 +88,27 @@ const Link: React.FC<LinkProps> = ({ link, index }) => {
   });
 
   return (
-    <div className="flex items-start space-x-2 mt-3">
-      <div className="flex items-center space-x-1 text-gray-500 text-sm">
+    <div className={styles.linkContainer}>
+      <div className={styles.voteSection}>
         <span>{index + 1}.</span>
         {authToken && (
           <button
             onClick={() => vote()}
-            className="hover:text-gray-800 focus:outline-none"
+            className={styles.voteButton}
             title="Vote"
           >
             ▲
           </button>
         )}
       </div>
-      <div className="flex flex-col">
-        <div className="text-sm text-gray-900">
-          <a
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
+      <div className={styles.linkContent}>
+        <div className={styles.linkDescription}>
+          <a href={link.url} target="_blank" rel="noopener noreferrer">
             {link.description}
           </a>{" "}
-          <span className="text-gray-500 text-xs">({link.url})</span>
+          <span className={styles.linkUrl}>({link.url})</span>
         </div>
-        <div className="text-xs text-gray-500">
+        <div className={styles.metaInfo}>
           {link.votes.length} votes | by {link.postedBy?.name || "Unknown"}{" "}
           {timeDifferenceForDate(link.createdAt)}
         </div>
